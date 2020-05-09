@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"oxygen-xy.github.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="今早起来想起了拦截导弹问题，就又想到了最长上升子序列，前段时间学习过这个算法，但可能由于太久没练了，忘记了到底是个怎么原理，今天就打算写下来，以后就可以翻出来看看。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="最长上升子序列">
+<meta property="og:url" content="https://oxygen-xy.github.io/2020/05/09/%E6%9C%80%E9%95%BF%E4%B8%8A%E5%8D%87%E5%AD%90%E5%BA%8F%E5%88%97/index.html">
+<meta property="og:site_name" content="Oxygen-xy">
+<meta property="og:description" content="今早起来想起了拦截导弹问题，就又想到了最长上升子序列，前段时间学习过这个算法，但可能由于太久没练了，忘记了到底是个怎么原理，今天就打算写下来，以后就可以翻出来看看。">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2020-05-09T00:09:42.000Z">
+<meta property="article:modified_time" content="2020-05-09T01:19:42.425Z">
+<meta property="article:author" content="Jackson Yee">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://oxygen-xy.github.io/2020/05/09/%E6%9C%80%E9%95%BF%E4%B8%8A%E5%8D%87%E5%AD%90%E5%BA%8F%E5%88%97/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>最长上升子序列 | Oxygen-xy</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Oxygen-xy</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://oxygen-xy.github.io/2020/05/09/%E6%9C%80%E9%95%BF%E4%B8%8A%E5%8D%87%E5%AD%90%E5%BA%8F%E5%88%97/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/photo.jpg">
+      <meta itemprop="name" content="Jackson Yee">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Oxygen-xy">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          最长上升子序列
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2020-05-09 08:09:42 / 修改时间：09:19:42" itemprop="dateCreated datePublished" datetime="2020-05-09T08:09:42+08:00">2020-05-09</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%AE%97%E6%B3%95/" itemprop="url" rel="index"><span itemprop="name">算法</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>今早起来想起了拦截导弹问题，就又想到了最长上升子序列，前段时间学习过这个算法，但可能由于太久没练了，忘记了到底是个怎么原理，今天就打算写下来，以后就可以翻出来看看。</p>
+<a id="more"></a>
+
+<h2 id="问题描述"><a href="#问题描述" class="headerlink" title="问题描述"></a>问题描述</h2><p>上升子序列是在一串序列中，要使<em>a1 &lt; a2 &lt; a3 &lt; …… &lt; ak</em>,但在这里，是子序列，那就意味着他们不需要相临，但需要保持与原序列中相对的顺序是相同的。而在前面，我写了一篇kmp算法，那里是字符串匹配，那就需要是连续的，匹配到的序列应当与子串的对应起来，而在这里我们就了解如何去求最长上升子序列。</p>
+<h2 id="三种解法-目前先更新两种：dp和二分"><a href="#三种解法-目前先更新两种：dp和二分" class="headerlink" title="三种解法(目前先更新两种：dp和二分)"></a>三种解法(目前先更新两种：dp和二分)</h2><ul>
+<li><h3 id="dp"><a href="#dp" class="headerlink" title="dp"></a>dp</h3>在一个序列中，我们可以用动态规划去求，即我们要求整个序列的最长那我们就需要先去求出前面的的最长然后保证到最后的时候仍然是最长的。</li>
+</ul>
+<p>eg： 序列： 1 3 2 5 3 6<br>我们在这里将dp[i]记作以a[i]结尾的最长上升子序列<br>前1个数  a[1]=1,dp[1]=1;<br>前2个数  a[2]=3,a[2] &gt; a[1],dp[2]=2;<br>前3个数  a[3]=2,a[3] &gt; a[1],a[3] &lt; a[2],dp[3]=dp[1]+1=2;<br>前4个数  a[4]=5,a[4] &gt; a[1],a[4] &gt; a[2],a[4] &gt; a[3] ,dp[4]=dp[3]+1=3;<br>前5个数  a[5]=3,a[5] &gt; a[1],a[5] &gt; a[3],dp[5]=dp[3]+1=3;<br>前6个数  a[6]=6,a[6] &gt; a[1],a[6] &gt; a[2],a[6] &gt; a[3],a[6] &gt; a[4],a[6] &gt; a[5],dp[6]=dp[5]+1=4;<br>在这里得出，这个最长上升子序列的元素数是4，但也可以看出最长上升子序列的选择是不唯一的，但我们可以在这里得出最长上升子序列的个数。 </p>
+<p>-代码</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">#include&lt;stdio.h&gt;</span><br><span class="line">#include&lt;algorithm&gt;</span><br><span class="line">#include&lt;iostream&gt;</span><br><span class="line">#include&lt;math.h&gt;</span><br><span class="line">using namespace std;</span><br><span class="line"></span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">	int a[6]&#x3D;&#123;1,3,2,5,3,6&#125;;</span><br><span class="line">	int dp[6]&#x3D;&#123;1,1,1,1,1,1&#125;;</span><br><span class="line">	int i,j;</span><br><span class="line">	dp[0]&#x3D;1;</span><br><span class="line">	int cnt&#x3D;1;</span><br><span class="line">	for(i&#x3D;1;i&lt;6;i++)</span><br><span class="line">	&#123;</span><br><span class="line">		for(j&#x3D;i-1;j&gt;&#x3D;0;j--)</span><br><span class="line">		&#123;</span><br><span class="line">			if(a[i]&gt;a[j])</span><br><span class="line">			dp[i]&#x3D;max(dp[i],dp[j]+1);	</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	for(i&#x3D;0;i&lt;6;i++)</span><br><span class="line">	&#123;</span><br><span class="line">		if(dp[i]&gt;cnt)</span><br><span class="line">		cnt&#x3D;dp[i];</span><br><span class="line">	&#125;</span><br><span class="line">	printf(&quot;%d\n&quot;,cnt);</span><br><span class="line">	return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><h3 id="二分法求最长上升子序列"><a href="#二分法求最长上升子序列" class="headerlink" title="二分法求最长上升子序列"></a>二分法求最长上升子序列</h3>在一串序列中，我们也可以采用替换法来求最长上升子序列，eg；我们可以用一个数组来装子序列，然后在后面的时候，去替换前面第一个比他大的位置的数。<br>这里处理我们需要一个最长子序列的数组_long[],用len来记录它的长度，记得初始化全部为inf(0x3f3f3f3f).<br>eg:1 3 2 5 3 6<br>len=0;<br>首先a[1]=1,a[1] &lt; _long[1] (inf),_long[1]=1,len++,len=1;<br>a[2]=3,a[2] &lt; _long[2] (inf),_long [2] =3,len++,len=2;<br>a[3]=2,a[3] &lt; _long[2] (3),_long[2]=2,len=2;<br>a[4]=5,a[4] &lt; _long[3] (inf),_long[3]=5,len++,len=3;<br>a[5]=3,a[5] &lt; _long[3] (5),_long[3]=3,len=3;<br>a[6]=6,a[6] &lt; _long[4] (inf),_long[4]=6,len++,len=4;  </li>
+</ul>
+<p>在代码处理中，寻找_long[] 中的大于等于a[i]的数可以用c++中的lower_bund();</p>
+<ul>
+<li>代码如下<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">#include&lt;stdio.h&gt;</span><br><span class="line">#include&lt;algorithm&gt;</span><br><span class="line">#include&lt;iostream&gt;</span><br><span class="line">#include&lt;math.h&gt;</span><br><span class="line">#include&lt;string.h&gt; </span><br><span class="line">using namespace std;</span><br><span class="line"></span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">	int a[6]&#x3D;&#123;1,3,2,5,3,6&#125;;</span><br><span class="line">	int _long[6];</span><br><span class="line">	int i,j;</span><br><span class="line">	memset(_long,0x3f3f3f3f,sizeof(_long));</span><br><span class="line">	int len&#x3D;0;</span><br><span class="line">	for(i&#x3D;0;i&lt;6;i++)</span><br><span class="line">	&#123;</span><br><span class="line">		j&#x3D;lower_bound(_long,_long+6,a[i])-_long+1;</span><br><span class="line">		_long[lower_bound(_long,_long+6,a[i])-_long]&#x3D;a[i];</span><br><span class="line">		if(len&lt;j)</span><br><span class="line">		len&#x3D;j;	</span><br><span class="line">	&#125;</span><br><span class="line">	printf(&quot;%d\n&quot;,len);</span><br><span class="line">	return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h3 id="树状数组求最长上升子序列-待更新"><a href="#树状数组求最长上升子序列-待更新" class="headerlink" title="树状数组求最长上升子序列(待更新)"></a>树状数组求最长上升子序列(待更新)</h3>
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/05/08/kmp%E7%AE%97%E6%B3%95/" rel="prev" title="kmp算法">
+      <i class="fa fa-chevron-left"></i> kmp算法
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#问题描述"><span class="nav-number">1.</span> <span class="nav-text">问题描述</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#三种解法-目前先更新两种：dp和二分"><span class="nav-number">2.</span> <span class="nav-text">三种解法(目前先更新两种：dp和二分)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#dp"><span class="nav-number">2.1.</span> <span class="nav-text">dp</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#二分法求最长上升子序列"><span class="nav-number">2.2.</span> <span class="nav-text">二分法求最长上升子序列</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#树状数组求最长上升子序列-待更新"><span class="nav-number">2.3.</span> <span class="nav-text">树状数组求最长上升子序列(待更新)</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Jackson Yee"
+      src="/images/photo.jpg">
+  <p class="site-author-name" itemprop="name">Jackson Yee</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">2</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+  </nav>
+</div>
+
+
+  <div class="links-of-blogroll motion-element">
+    <div class="links-of-blogroll-title"><i class="fa fa-link fa-fw"></i>
+      Links
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="http://oxygen-xy.github.io/" title="http:&#x2F;&#x2F;oxygen-xy.github.io">oxygen-xy</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="http://www.dream-ak.top/" title="http:&#x2F;&#x2F;www.dream-ak.top" rel="noopener" target="_blank">dream-ak.top</a>
+        </li>
+    </ul>
+  </div>
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Jackson Yee</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
