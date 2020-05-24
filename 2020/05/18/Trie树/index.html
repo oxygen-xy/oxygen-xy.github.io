@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"oxygen-xy.github.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="本来是想先完成平衡树的blog的，但是，我不会。。。就先完成Trie树的学习吧！">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Trie树">
+<meta property="og:url" content="https://oxygen-xy.github.io/2020/05/18/Trie%E6%A0%91/index.html">
+<meta property="og:site_name" content="小北">
+<meta property="og:description" content="本来是想先完成平衡树的blog的，但是，我不会。。。就先完成Trie树的学习吧！">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://oxygen-xy.github.io/images/trie_1.png">
+<meta property="article:published_time" content="2020-05-18T08:36:59.000Z">
+<meta property="article:modified_time" content="2020-05-19T14:09:33.083Z">
+<meta property="article:author" content="Jackson Yee">
+<meta property="article:tag" content="ACM">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://oxygen-xy.github.io/images/trie_1.png">
+
+<link rel="canonical" href="https://oxygen-xy.github.io/2020/05/18/Trie%E6%A0%91/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>Trie树 | 小北</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">小北</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://oxygen-xy.github.io/2020/05/18/Trie%E6%A0%91/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/photo.jpg">
+      <meta itemprop="name" content="Jackson Yee">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="小北">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Trie树
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-05-18 16:36:59" itemprop="dateCreated datePublished" datetime="2020-05-18T16:36:59+08:00">2020-05-18</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-05-19 22:09:33" itemprop="dateModified" datetime="2020-05-19T22:09:33+08:00">2020-05-19</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%AE%97%E6%B3%95/" itemprop="url" rel="index"><span itemprop="name">算法</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>本来是想先完成平衡树的blog的，但是，我不会。。。就先完成Trie树的学习吧！</p>
+<a id="more"></a>
+
+<h3 id="字典树基础介绍"><a href="#字典树基础介绍" class="headerlink" title="字典树基础介绍"></a>字典树基础介绍</h3><ul>
+<li>关于<br>字典树又称单词查找树，Trie树，是一种树形结构，是一种哈希树的变种。典型应用是用于统计，排序和保存大量的字符串（但不仅限于字符串），所以经常被搜索引擎系统用于文本词频统计。它的优点是：利用字符串的公共前缀来减少查询时间，最大限度地减少无谓的字符串比较，查询效率比哈希树高。  </li>
+<li>性质  </li>
+</ul>
+<p>1.根节点不包含字符，除根节点外每一个节点都只包含一个字符；<br>2.从根节点到某一节点，路径上经过的字符连接起来，为该节点对应的字符串；<br>3.每个节点的所有子节点包含的字符都不相同。</p>
+<ul>
+<li>应用<br>应用在串的快速检索、“串”排序、最长公共前缀这些方面，作为其他数据结构的辅助结构（后缀树，AC自动机……）（接下来我要记录的是串的快速检索。后面的等我以后学习了再加入进来。）<br>——来自百度百科</li>
+</ul>
+<h3 id="引入"><a href="#引入" class="headerlink" title="引入"></a>引入</h3><p>在给定的几个单词中去查找时候出现过某一个单词或者某些单词，当单词数量较少时，我们也依然可以暴力的去匹配和枚举，但当字符串多，按暴力的方法就不太可行了，所以来学习Trie树。</p>
+<p>eg:给你6个单词abbe,abde，abc，abcd,hope，help.然后再给你多个单词比如abbe，hel，abc，cook，问它是否在已给出的单词中出现过？</p>
+<h3 id="建树"><a href="#建树" class="headerlink" title="建树"></a>建树</h3><p>首先创造一个根节点，然后根据单词abbe,abde，abc，abcd,hope，help一次去建立，建立过程如下：由第一个单词abbe，首先查询根节点下面是否有节点a，显然第一个没有，所以我们要建立节点a，然后在相应的往a节点后建立节点b，b,e;在把第一个单词建立完成之后，我们要对最后一个e做标记，代表他是一个单词的最后一个，后面再搜索是否有的时候，就会用到这个标记，对第二个单词abde,我们发现根节点下面有a,a的节点下面也有b,但b下面却没有d,所以我们在b节点下面建立节点d，依次类推，将后面的单词这样建立下来，就有了下面的这样一颗树。<br><img src="/images/trie_1.png" alt="alt"></p>
+<p>代码如下:</p>
+<hr>
+<p>定义节点结构体  </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">struct node&#123;</span><br><span class="line">	node* next[26];       &#x2F;&#x2F;指向二十六个字符（a-z分别被0-25表示） </span><br><span class="line">	int cnt,i;</span><br><span class="line">	node()</span><br><span class="line">	&#123;</span><br><span class="line">		cnt&#x3D;0;</span><br><span class="line">		for(i&#x3D;0;i&lt;26;i++)</span><br><span class="line">		next[i]&#x3D;NULL;      &#x2F;&#x2F;指针赋初值为NULL </span><br><span class="line">	&#125; </span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>插入给出的字符串</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">void insert(node* root,char s[]) </span><br><span class="line">&#123;</span><br><span class="line">	int ls&#x3D;strlen(s);</span><br><span class="line">	int i&#x3D;0;</span><br><span class="line">	node *p&#x3D;root;</span><br><span class="line">	for(i&#x3D;0;i&lt;ls;i++)</span><br><span class="line">	&#123;</span><br><span class="line">		int c&#x3D;s[i]-&#39;a&#39;; </span><br><span class="line">		if(p-&gt;next[c]&#x3D;&#x3D;NULL)&#x2F;&#x2F;如果不存在就创造一个 </span><br><span class="line">		&#123;</span><br><span class="line">			p-&gt;next[c]&#x3D;new node();</span><br><span class="line">		&#125;</span><br><span class="line">		p&#x3D;p-&gt;next[c];</span><br><span class="line">	&#125;</span><br><span class="line">	p-&gt;cnt++;   &#x2F;&#x2F;标记加一，代表字符串出现的次数 </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<hr>
+<h3 id="查询"><a href="#查询" class="headerlink" title="查询"></a>查询</h3><p>查询第一个单词，abbe,我们从上面的图来看，abbe出现在前面的字符串中，而对于hel，我们会发现hel按照我们的查询，每个字符都出现了，但实际上，原字符串中是没有hel的这个字符串，所以我们就了解上面为什么在建树的过程中我们将字符串的最后一个单词做标记，这就可以使我们正确查询是否出现过待查询单词。</p>
+<p>代码如下：</p>
+<hr>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">int search(node* root,char s[])</span><br><span class="line">&#123;</span><br><span class="line">	int i&#x3D;0;</span><br><span class="line">	int ls&#x3D;strlen(s);</span><br><span class="line">	while(i&lt;ls)</span><br><span class="line">	&#123;</span><br><span class="line">		int c&#x3D;s[i]-&#39;a&#39;;</span><br><span class="line">		if(root-&gt;next[c]&#x3D;&#x3D;NULL)&#x2F;&#x2F;如果字符串中某个字符没有，则已经k可以认定没有出现 </span><br><span class="line">			return 0;</span><br><span class="line">		else</span><br><span class="line">			root&#x3D;root-&gt;next[c];</span><br><span class="line">		i++;</span><br><span class="line">	&#125; </span><br><span class="line">	return root-&gt;cnt; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<hr>
+<hr>
+<ul>
+<li>搜索字典树方法<br>搜索字典项目的方法为：<br>(1) 从根结点开始一次搜索；<br>(2) 取得要查找关键词的第一个字母，并根据该字母选择对应的子树并转到该子树继续进行检索；<br>(3) 在相应的子树上，取得要查找关键词的第二个字母,并进一步选择对应的子树进行检索。<br>(4) 迭代过程……<br>(5) 在某个结点处，关键词的所有字母已被取出，则读取附在该结点上的信息，即完成查找。<br>——来自百度百科</li>
+</ul>
+<hr>
+<h3 id="删除字符串"><a href="#删除字符串" class="headerlink" title="删除字符串"></a>删除字符串</h3><p>在字典树中删除字符串有三个情况，第一种是那个节点下面只有一个字符串，那么我们直接对节点进行删除即可，将整个字符串删除，第二种，一个字符串出现多次，那么我们就直接将最后一个节点的cnt减一，第三种就是你要删除的字符串也有其余的字符串有相同的前缀，比如abbe与abde就有相同的，所以我们就要判断节点下面是否还有其余的非NULL节点，如果有就不删除，没有就删除节点，</p>
+<p>代码如下：</p>
+<hr>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">bool Delete(node* root,char s[],int pos,int ls)</span><br><span class="line">&#123;</span><br><span class="line">	bool flag;&#x2F;&#x2F;判断该节点是否还有next指向的非NULL节点 </span><br><span class="line">	if(pos!&#x3D;ls)</span><br><span class="line">	&#123;</span><br><span class="line">		flag&#x3D;Delete(root-&gt;next[s[pos]-&#39;a&#39;],s,pos+1,ls);</span><br><span class="line">		if(!flag)</span><br><span class="line">		&#123;</span><br><span class="line">			root-&gt;next[s[pos] - &#39;a&#39;] &#x3D; NULL;</span><br><span class="line">			if (root-&gt;cnt)</span><br><span class="line">			&#123;</span><br><span class="line">				delete root;</span><br><span class="line">				return false;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">		return true;</span><br><span class="line">	&#125;</span><br><span class="line">	else</span><br><span class="line">	&#123;</span><br><span class="line">		root-&gt;cnt--;</span><br><span class="line">		for(int i&#x3D;0;i&lt;26;i++)</span><br><span class="line">		&#123;</span><br><span class="line">			if(root-&gt;next[i]!&#x3D;NULL)</span><br><span class="line">			return true;</span><br><span class="line">		&#125;</span><br><span class="line">		if(root-&gt;cnt)</span><br><span class="line">		return true;</span><br><span class="line">		else</span><br><span class="line">		&#123;</span><br><span class="line">			delete root;</span><br><span class="line">			return false; </span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<hr>
+<p>上面的代码是空间动态建树的代码，<a href="https://paste.ubuntu.com/p/G3dQM5kf8j/" target="_blank" rel="noopener">数组模拟建树代码</a>  </p>
+<h3 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h3><p>Trie树的基本性质可以归纳为：<br>（1）根节点不包含字符，除根节点意外每个节点只包含一个字符。<br>（2）从根节点到某一个节点，路径上经过的字符连接起来，为该节点对应的字符串。<br>（3）每个节点的所有子节点包含的字符串不相同。<br>Trie树有一些特性：<br>1）根节点不包含字符，除根节点外每一个节点都只包含一个字符。<br>2）从根节点到某一节点，路径上经过的字符连接起来，为该节点对应的字符串。<br>3）每个节点的所有子节点包含的字符都不相同。<br>4）如果字符的种数为n，则每个结点的出度为n，这也是空间换时间的体现，浪费了很多的空间。<br>5）插入查找的复杂度为O(n)，n为字符串长度。<br><a href="https://blog.csdn.net/hackbuteer1/article/details/7964147" target="_blank" rel="noopener">出自博客</a></p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/ACM/" rel="tag"># ACM</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/05/16/%E7%BA%BF%E6%AE%B5%E6%A0%91/" rel="prev" title="线段树">
+      <i class="fa fa-chevron-left"></i> 线段树
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2020/05/21/%E6%89%A9%E6%AC%A7%E5%92%8C%E7%BA%BF%E6%80%A7%E5%90%8C%E4%BD%99/" rel="next" title="扩欧和线性同余">
+      扩欧和线性同余 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#字典树基础介绍"><span class="nav-number">1.</span> <span class="nav-text">字典树基础介绍</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#引入"><span class="nav-number">2.</span> <span class="nav-text">引入</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#建树"><span class="nav-number">3.</span> <span class="nav-text">建树</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#查询"><span class="nav-number">4.</span> <span class="nav-text">查询</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#删除字符串"><span class="nav-number">5.</span> <span class="nav-text">删除字符串</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#小结"><span class="nav-number">6.</span> <span class="nav-text">小结</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Jackson Yee"
+      src="/images/photo.jpg">
+  <p class="site-author-name" itemprop="name">Jackson Yee</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">6</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+  <div class="links-of-blogroll motion-element">
+    <div class="links-of-blogroll-title"><i class="fa fa-link fa-fw"></i>
+      Links
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="http://oxygen-xy.github.io/" title="http:&#x2F;&#x2F;oxygen-xy.github.io">oxygen-xy</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="http://www.dream-ak.top/" title="http:&#x2F;&#x2F;www.dream-ak.top" rel="noopener" target="_blank">dream-ak.top</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://kevin7zz.github.io/" title="https:&#x2F;&#x2F;kevin7zz.github.io&#x2F;" rel="noopener" target="_blank">S'kevin</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://softmountain.cn/" title="https:&#x2F;&#x2F;softmountain.cn&#x2F;" rel="noopener" target="_blank">X'peng</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://blog.nowcoder.net/shyyhs" title="https:&#x2F;&#x2F;blog.nowcoder.net&#x2F;shyyhs" rel="noopener" target="_blank">L'pingtao</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://sakurakarma.github.io/" title="https:&#x2F;&#x2F;sakurakarma.github.io&#x2F;" rel="noopener" target="_blank">Y'wen</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="http://47.92.238.94/wordpress/" title="http:&#x2F;&#x2F;47.92.238.94&#x2F;wordpress&#x2F;" rel="noopener" target="_blank">L'tingqi</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://takanashi-shiro.github.io/" title="https:&#x2F;&#x2F;takanashi-shiro.github.io&#x2F;" rel="noopener" target="_blank">G'menglong</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="http://106.52.48.80/" title="http:&#x2F;&#x2F;106.52.48.80&#x2F;" rel="noopener" target="_blank">L'chengfu</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://blog.csdn.net/qq_46345701" title="https:&#x2F;&#x2F;blog.csdn.net&#x2F;qq_46345701" rel="noopener" target="_blank">W'ankang</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://blog.nowcoder.net/dpedantry17" title="https:&#x2F;&#x2F;blog.nowcoder.net&#x2F;dpedantry17" rel="noopener" target="_blank">W'xiangbo</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://blog.csdn.net/weixin_45619884/article/details/105945374" title="https:&#x2F;&#x2F;blog.csdn.net&#x2F;weixin_45619884&#x2F;article&#x2F;details&#x2F;105945374" rel="noopener" target="_blank">W'hanxu</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://blog.csdn.net/yaoyuebaba/article/details/106170570" title="https:&#x2F;&#x2F;blog.csdn.net&#x2F;yaoyuebaba&#x2F;article&#x2F;details&#x2F;106170570" rel="noopener" target="_blank">C'shaoquan</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://lsveritas.github.io/" title="https:&#x2F;&#x2F;lsveritas.github.io&#x2F;" rel="noopener" target="_blank">L'sheng</a>
+        </li>
+    </ul>
+  </div>
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Jackson Yee</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
