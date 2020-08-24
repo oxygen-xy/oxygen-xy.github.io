@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"oxygen-xy.github.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="2020 Multi-University Training Contest 2部分补题">
+<meta property="og:type" content="article">
+<meta property="og:title" content="2020杭电多校-2补题">
+<meta property="og:url" content="https://oxygen-xy.github.io/2020/08/24/2020%E6%9D%AD%E7%94%B5%E5%A4%9A%E6%A0%A1-2%E8%A1%A5%E9%A2%98/index.html">
+<meta property="og:site_name" content="小北">
+<meta property="og:description" content="2020 Multi-University Training Contest 2部分补题">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2020-08-24T08:45:01.000Z">
+<meta property="article:modified_time" content="2020-08-24T10:44:43.150Z">
+<meta property="article:author" content="Jackson Yee">
+<meta property="article:tag" content="ACM">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://oxygen-xy.github.io/2020/08/24/2020%E6%9D%AD%E7%94%B5%E5%A4%9A%E6%A0%A1-2%E8%A1%A5%E9%A2%98/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>2020杭电多校-2补题 | 小北</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">小北</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://oxygen-xy.github.io/2020/08/24/2020%E6%9D%AD%E7%94%B5%E5%A4%9A%E6%A0%A1-2%E8%A1%A5%E9%A2%98/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/photo.jpg">
+      <meta itemprop="name" content="Jackson Yee">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="小北">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          2020杭电多校-2补题
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2020-08-24 16:45:01 / 修改时间：18:44:43" itemprop="dateCreated datePublished" datetime="2020-08-24T16:45:01+08:00">2020-08-24</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E8%A1%A5%E9%A2%98/" itemprop="url" rel="index"><span itemprop="name">补题</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>2020 Multi-University Training Contest 2部分补题</p>
+<a id="more"></a>
+<h2 id="1001-Total-Eclipse"><a href="#1001-Total-Eclipse" class="headerlink" title="1001 Total Eclipse"></a>1001 Total Eclipse</h2><p><a href="http://acm.hdu.edu.cn/showproblem.php?pid=6763" target="_blank" rel="noopener">Total Eclipse</a></p>
+<h3 id="题意"><a href="#题意" class="headerlink" title="题意"></a>题意</h3><p>n座城市，m条道路，每个城市有一盏亮度为bi的灯，每次可以选择一个连通块让联通块上的所有城市的灯的亮度减1，亮度为0的城市不能算入连通块中，求让全部城市的灯的亮度变成0的最小次数是多少</p>
+<h3 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h3><p>并查集<br>将亮度从大到小排序，然后依次来加入点x与x相邻的点y，如果xy不连通，则将y与x合并，且将x作为y的父亲，对于x，需要删除他时，他已经减去了他父亲节点的亮度，所以只需要再减去d-dfather的答案，最后求和。</p>
+<h3 id="AC代码"><a href="#AC代码" class="headerlink" title="AC代码"></a>AC代码</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br></pre></td><td class="code"><pre><span class="line">#include&lt;stdio.h&gt;</span><br><span class="line">#include&lt;algorithm&gt;</span><br><span class="line">#include&lt;iostream&gt;</span><br><span class="line">#include&lt;math.h&gt;</span><br><span class="line">#include&lt;string.h&gt;</span><br><span class="line">#include&lt;vector&gt; </span><br><span class="line">using namespace std;</span><br><span class="line">int d[100010],f[100010],fa[100010],vis[100010],num[100010];&#x2F;&#x2F;d[]表示数据，f[] 表示father，fa[]方便计算，vis[]表示是否计算，num[]记录序号 </span><br><span class="line">vector&lt;int&gt; v[100010];</span><br><span class="line">int cmp(int a,int b)</span><br><span class="line">&#123;</span><br><span class="line">	return d[a]&gt;d[b];</span><br><span class="line">&#125;</span><br><span class="line">int find(int x)</span><br><span class="line">&#123;</span><br><span class="line">	if(f[x]&#x3D;&#x3D;x)</span><br><span class="line">	return f[x];</span><br><span class="line">	return f[x]&#x3D;find(f[x]);</span><br><span class="line">&#125;</span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">	int t,i;</span><br><span class="line">	scanf(&quot;%d&quot;,&amp;t);</span><br><span class="line">	while(t--)</span><br><span class="line">	&#123;</span><br><span class="line">		int n,m;</span><br><span class="line">		scanf(&quot;%d%d&quot;,&amp;n,&amp;m);</span><br><span class="line">		for(i&#x3D;1;i&lt;&#x3D;n;i++)</span><br><span class="line">		v[i].clear();&#x2F;&#x2F;清空栈</span><br><span class="line">		for(i&#x3D;1;i&lt;&#x3D;n;i++)</span><br><span class="line">		&#123;</span><br><span class="line">			scanf(&quot;%d&quot;,&amp;d[i]);</span><br><span class="line">			f[i]&#x3D;i;</span><br><span class="line">			vis[i]&#x3D;fa[i]&#x3D;0;</span><br><span class="line">			num[i]&#x3D;i;</span><br><span class="line">		&#125;</span><br><span class="line">		sort(num+1,num+1+n,cmp);</span><br><span class="line">		for(i&#x3D;1;i&lt;&#x3D;m;i++)</span><br><span class="line">		&#123;</span><br><span class="line">			int a,b;</span><br><span class="line">			scanf(&quot;%d%d&quot;,&amp;a,&amp;b);</span><br><span class="line">			v[a].push_back(b);</span><br><span class="line">			v[b].push_back(a);</span><br><span class="line">		&#125; </span><br><span class="line">		for(i&#x3D;1;i&lt;&#x3D;n;i++)</span><br><span class="line">		&#123;</span><br><span class="line">			int x&#x3D;num[i];</span><br><span class="line">			vis[x]&#x3D;1;</span><br><span class="line">			for(auto it:v[x])</span><br><span class="line">			&#123;</span><br><span class="line">				if(!vis[it])</span><br><span class="line">				continue;</span><br><span class="line">				int fx&#x3D;find(it);</span><br><span class="line">				if(fx&#x3D;&#x3D;x)</span><br><span class="line">				continue;</span><br><span class="line">				fa[fx]&#x3D;f[fx]&#x3D;x;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">		long long cnt&#x3D;0;</span><br><span class="line">		for(i&#x3D;1;i&lt;&#x3D;n;i++)</span><br><span class="line">		&#123;</span><br><span class="line">			cnt+&#x3D;d[i]-d[fa[i]];</span><br><span class="line">		&#125;</span><br><span class="line">		printf(&quot;%lld\n&quot;,cnt);</span><br><span class="line">	&#125;</span><br><span class="line">	return 0; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="1006-The-Oculus"><a href="#1006-The-Oculus" class="headerlink" title="1006 The Oculus"></a>1006 The Oculus</h2><p><a href="http://acm.hdu.edu.cn/showproblem.php?pid=6768" target="_blank" rel="noopener">The Oculus</a> </p>
+<h3 id="题意-1"><a href="#题意-1" class="headerlink" title="题意"></a>题意</h3><p>令修改的那一位为 k，则要找到这个 k 满足 A×B = C +Fk，其中 k ≤ 2000001。</p>
+<h3 id="思路-1"><a href="#思路-1" class="headerlink" title="思路"></a>思路</h3><p>使用unsigned long long 暴力</p>
+<h3 id="AC代码-1"><a href="#AC代码-1" class="headerlink" title="AC代码"></a>AC代码</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br></pre></td><td class="code"><pre><span class="line">#include&lt;stdio.h&gt;</span><br><span class="line">#include&lt;math.h&gt;</span><br><span class="line">#include&lt;algorithm&gt;</span><br><span class="line">#include&lt;iostream&gt;</span><br><span class="line">using namespace std;</span><br><span class="line">#define ull unsigned long long</span><br><span class="line">const int N&#x3D;2000100;</span><br><span class="line">ull f[N];</span><br><span class="line">int a[N];</span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">	int t,i;</span><br><span class="line">	scanf(&quot;%d&quot;,&amp;t);</span><br><span class="line">	f[1]&#x3D;1;</span><br><span class="line">	f[2]&#x3D;2;</span><br><span class="line">	for(i&#x3D;3;i&lt;N;i++)</span><br><span class="line">	f[i]&#x3D;f[i-1]+f[i-2];</span><br><span class="line">	while(t--)</span><br><span class="line">	&#123;</span><br><span class="line">		ull cnt_1&#x3D;0,cnt_2&#x3D;0,cnt;</span><br><span class="line">		int n,m,q;</span><br><span class="line">		scanf(&quot;%d&quot;,&amp;n);</span><br><span class="line">		for(i&#x3D;1;i&lt;&#x3D;n;i++)</span><br><span class="line">		&#123;</span><br><span class="line">			int x;</span><br><span class="line">			scanf(&quot;%d&quot;,&amp;x);</span><br><span class="line">			cnt_1+&#x3D;f[i]*x;</span><br><span class="line">		&#125;</span><br><span class="line">		scanf(&quot;%d&quot;,&amp;m);</span><br><span class="line">		for(i&#x3D;1;i&lt;&#x3D;m;i++)</span><br><span class="line">		&#123;</span><br><span class="line">			int x;</span><br><span class="line">			scanf(&quot;%d&quot;,&amp;x);</span><br><span class="line">			cnt_2+&#x3D;f[i]*x;</span><br><span class="line">		&#125;</span><br><span class="line">		scanf(&quot;%d&quot;,&amp;q);</span><br><span class="line">		cnt&#x3D;cnt_1*cnt_2;</span><br><span class="line">		for(i&#x3D;1;i&lt;&#x3D;q;i++)</span><br><span class="line">		&#123;</span><br><span class="line">			int x;</span><br><span class="line">			scanf(&quot;%d&quot;,&amp;x);</span><br><span class="line">			cnt-&#x3D;f[i]*x;</span><br><span class="line">		&#125;</span><br><span class="line">		for(i&#x3D;1;i&lt;&#x3D;q;i++)</span><br><span class="line">		&#123;</span><br><span class="line">			if(cnt&#x3D;&#x3D;f[i])</span><br><span class="line">			&#123;</span><br><span class="line">				printf(&quot;%d\n&quot;,i);</span><br><span class="line">				continue;</span><br><span class="line">			&#125; </span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/ACM/" rel="tag"># ACM</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/08/23/2020%E6%9D%AD%E7%94%B5%E5%A4%9A%E6%A0%A1-1%E8%A1%A5%E9%A2%98/" rel="prev" title="2020杭电多校-1补题">
+      <i class="fa fa-chevron-left"></i> 2020杭电多校-1补题
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1001-Total-Eclipse"><span class="nav-number">1.</span> <span class="nav-text">1001 Total Eclipse</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#题意"><span class="nav-number">1.1.</span> <span class="nav-text">题意</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#思路"><span class="nav-number">1.2.</span> <span class="nav-text">思路</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#AC代码"><span class="nav-number">1.3.</span> <span class="nav-text">AC代码</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1006-The-Oculus"><span class="nav-number">2.</span> <span class="nav-text">1006 The Oculus</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#题意-1"><span class="nav-number">2.1.</span> <span class="nav-text">题意</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#思路-1"><span class="nav-number">2.2.</span> <span class="nav-text">思路</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#AC代码-1"><span class="nav-number">2.3.</span> <span class="nav-text">AC代码</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Jackson Yee"
+      src="/images/photo.jpg">
+  <p class="site-author-name" itemprop="name">Jackson Yee</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">9</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+  <div class="links-of-blogroll motion-element">
+    <div class="links-of-blogroll-title"><i class="fa fa-link fa-fw"></i>
+      Links
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="http://oxygen-xy.github.io/" title="http:&#x2F;&#x2F;oxygen-xy.github.io">oxygen-xy</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="http://www.dream-ak.top/" title="http:&#x2F;&#x2F;www.dream-ak.top" rel="noopener" target="_blank">dream-ak.top</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://kevin7zz.github.io/" title="https:&#x2F;&#x2F;kevin7zz.github.io&#x2F;" rel="noopener" target="_blank">S'kevin</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://softmountain.cn/" title="https:&#x2F;&#x2F;softmountain.cn&#x2F;" rel="noopener" target="_blank">X'peng</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://blog.nowcoder.net/shyyhs" title="https:&#x2F;&#x2F;blog.nowcoder.net&#x2F;shyyhs" rel="noopener" target="_blank">L'pingtao</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://sakurakarma.github.io/" title="https:&#x2F;&#x2F;sakurakarma.github.io&#x2F;" rel="noopener" target="_blank">Y'wen</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="http://47.92.238.94/wordpress/" title="http:&#x2F;&#x2F;47.92.238.94&#x2F;wordpress&#x2F;" rel="noopener" target="_blank">L'tingqi</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://takanashi-shiro.github.io/" title="https:&#x2F;&#x2F;takanashi-shiro.github.io&#x2F;" rel="noopener" target="_blank">G'menglong</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="http://106.52.48.80/" title="http:&#x2F;&#x2F;106.52.48.80&#x2F;" rel="noopener" target="_blank">L'chengfu</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://blog.csdn.net/qq_46345701" title="https:&#x2F;&#x2F;blog.csdn.net&#x2F;qq_46345701" rel="noopener" target="_blank">W'ankang</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://blog.nowcoder.net/dpedantry17" title="https:&#x2F;&#x2F;blog.nowcoder.net&#x2F;dpedantry17" rel="noopener" target="_blank">W'xiangbo</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://blog.csdn.net/weixin_45619884/article/details/105945374" title="https:&#x2F;&#x2F;blog.csdn.net&#x2F;weixin_45619884&#x2F;article&#x2F;details&#x2F;105945374" rel="noopener" target="_blank">W'hanxu</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://blog.csdn.net/yaoyuebaba/article/details/106170570" title="https:&#x2F;&#x2F;blog.csdn.net&#x2F;yaoyuebaba&#x2F;article&#x2F;details&#x2F;106170570" rel="noopener" target="_blank">C'shaoquan</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://lsveritas.github.io/" title="https:&#x2F;&#x2F;lsveritas.github.io&#x2F;" rel="noopener" target="_blank">L'sheng</a>
+        </li>
+    </ul>
+  </div>
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Jackson Yee</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
